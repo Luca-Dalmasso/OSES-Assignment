@@ -56,7 +56,7 @@ static void *producer(void *arg)
 		fprintf(stderr,"unable to open file %s!\n",DEVICE);
 		exit(-1);
 	}
-	printf("Ready to produce!\n");
+	printf("Start sampling..\n");
 	while(1)
 	{
 		read(fd,&sample,1);
@@ -70,7 +70,7 @@ static void *producer(void *arg)
 			printf("Buffer full, waiting..\n");
 			sem_post(&semB);/*start the FFT and SPECTRUM*/
 			sem_wait(&semA);/*wait for FFT and SPECTRUM to finish*/
-			printf("Ready to produce!\n");
+			printf("Start sampling..\n");
 		}
 	}
 	close(fd);
