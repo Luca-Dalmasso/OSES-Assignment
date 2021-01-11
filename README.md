@@ -1,26 +1,30 @@
-# OSES Assignment
+# OSES-Assignment: A Layer for a custom Yocto-Distribution
+This repo contains a layer including the two recipes: one for building and deploying the APP and one for the cDD
  hearth rate monitor, which is made of two components:
  1)A Linux character-based driver (cDD) used to access a “virtual” Photopletismography(PPG) sensor
  2)Linux user application (APP)
 
-This README file contains information on the contents of the assign-kernel-layer layer.
+This README file contains information on the contents of the 'OSES-assignment' layer.
 Please see the corresponding sections below for details.
 
 I suppose that it has been done a previous yocto setup & build for ARM target NAMED "build-qemuarm",
 this instructions just show how to integrate a new layer to a yocto distribution.
 
-STARTING FROM your poky directory, after you cloned this project inside the directory:
+STARTING FROM your poky directory (cd path_to_poky), after you cloned this project inside the directory:
 
-# 0: Source to build directory
+# 0:Clone the repo and source to build directory
+		cd path_to_poky
+		git clone https://github.com/Luca-Dalmasso/OSES-Assignment.git
+		--Now should have the layer: OSES-Assignment
     source oe-init-build-env build-qemuarm
     
 # 1: Add the layer
-    bitbake-layers add-layer ../assign-kernel-layer
+    bitbake-layers add-layer ../OSES-Assignment
     
 # 2: Check Layer has been added (optional if you have done #1)
     cd conf
     cat bblayers.conf
-    --check that after the field 'BBLAYERS ?= "' you have something like 'poky/assign-kernel-layer \'
+    --check that after the field 'BBLAYERS ?= "' you have something like 'poky/OSES-Assignment \'
     --if not then write it manually
     
 # 3: Add to the image the driver+user application
