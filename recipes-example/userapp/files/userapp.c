@@ -87,27 +87,27 @@ static void *consumer(void *arg)
   int i;
   int minIdx, maxIdx;
 	while(1){
-		/*critical section ENTRY*/
+	/*critical section ENTRY*/
 		sem_wait(&semB);
-	  printf("Ready to perform FFT\n");
-  	fft(v, N, scratch );
+	   printf("Ready to perform FFT\n");
+  	   fft(v, N, scratch );
 		printf("Ready to perform PSD\n");
-  	for(k=0; k<N; k++) 
+  	   for(k=0; k<N; k++) 
 			abs[k] = (50.0/2048)*((v[k].Re*v[k].Re)+(v[k].Im*v[k].Im)); 
 		sem_post(&semA);
 		/*critical section EXIT*/
 		
-  	minIdx = (0.5*2048)/50;   // position in the PSD of the spectral line corresponding to 30 bpm
-  	maxIdx = 3*2048/50;       // position in the PSD of the spectral line corresponding to 180 bpm
+  	    minIdx = (0.5*2048)/50;   // position in the PSD of the spectral line corresponding to 30 bpm
+  	    maxIdx = 3*2048/50;       // position in the PSD of the spectral line corresponding to 180 bpm
 		// Find the peak in the PSD from 30 bpm to 180 bpm
-  	m = minIdx;
-  	for(k=minIdx; k<(maxIdx); k++)
-    	if( abs[k] > abs[m] )
+  	    m = minIdx;
+  	    for(k=minIdx; k<(maxIdx); k++)
+    	    if( abs[k] > abs[m] )
 				m = k;
 		// Print the heart beat in bpm
-  	printf( "\n\n%d bpm\n\n", (m)*60*50/2048 );
+  	    printf( "\n\n%d bpm\n\n", (m)*60*50/2048 );
 	}
-	pthread_exit(0);
+	 pthread_exit(0);
 }
 
 
@@ -115,7 +115,7 @@ void fft( complex *v, int n, complex *tmp )
 {
   if(n>1) {			/* otherwise, do nothing and return */
     int k,m;    
-		complex z, w, *vo, *ve;
+	complex z, w, *vo, *ve;
     ve = tmp; vo = tmp+n/2;
     for(k=0; k<n/2; k++) {
       ve[k] = v[2*k];
