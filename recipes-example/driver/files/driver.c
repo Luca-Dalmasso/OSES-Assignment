@@ -9,7 +9,7 @@
 #include "data.h"
 
 #define SUCCESS 0
-#define ID "VIRTUAL_HART"
+#define ID "virtual_sensor"
 #define N 2048
 
 

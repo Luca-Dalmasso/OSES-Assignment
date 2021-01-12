@@ -10,7 +10,7 @@
 #include <semaphore.h>
 #include <math.h>
 
-#define DEVICE "/dev/VIRTUAL_HART"
+#define DEVICE "/dev/virtual_sensor"
 #define MICROS 20000
 #define N 2048
 #define PI	3.14159265358979323846264338327950288

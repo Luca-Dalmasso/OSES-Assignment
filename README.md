@@ -47,7 +47,7 @@ STARTING FROM your poky directory (cd path_to_poky), after you cloned this proje
     --find out what is the Major number: i suppose it is 251 0 [major,minor]
     cat proc/devices | grep driver
     --create the associated device file named VIRTUAL_HART
-    mknod /dev/VIRTUAL_HART c 251 0
+    mknod /dev/virtual_sensor c 251 0
     --now the application can comunicate to the device file, start the application:
     userapp
 
