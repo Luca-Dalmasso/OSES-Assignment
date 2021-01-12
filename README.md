@@ -46,7 +46,7 @@ STARTING FROM your poky directory (cd path_to_poky), after you cloned this proje
     --you can use command: dmesg, to see if 'driver' kernel module has been correctly loaded
     --find out what is the Major number: i suppose it is 251 0 [major,minor]
     cat proc/devices | grep driver
-    --create the associated device file named VIRTUAL_HART
+    --create the associated device file named virtual_sensor
     mknod /dev/virtual_sensor c 251 0
     --now the application can comunicate to the device file, start the application:
     userapp
