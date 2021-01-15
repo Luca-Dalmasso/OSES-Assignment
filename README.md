@@ -5,16 +5,16 @@ RasperryPi3 + QemuARM
 
 This repo contains a layer including the two recipes: one for building and deploying the APP and one for the cDD
  hearth rate monitor, which is made of two components:
- 1)A Linux character-based driver (cDD) used to access a “virtual” Photopletismography(PPG) sensor
+ 1)A Linux character-based driver (cDD) used to access a “virtual” Photopletismography(PPG) sensor, 
  2)Linux user application (APP)
 
 This README file contains information on the contents of the 'OSES-assignment' layer.
 Please see the corresponding sections below for details.
 
 I suppose that it has been done a previous yocto setup & build for ARM target NAMED "build-qemuarm",
-this instructions just show how to integrate a new layer to a yocto distribution.
+this instructions just show how to integrate a new layer in a yocto distribution.
 
-STARTING FROM your poky directory (cd path_to_poky), after you cloned this project inside the directory:
+STARTING FROM your poky directory (cd path_to_poky):
 
 # 0:Clone the repo, and source to the build environment directory
     cd path_to_poky
@@ -25,7 +25,7 @@ STARTING FROM your poky directory (cd path_to_poky), after you cloned this proje
 # 1: Add the layer
     bitbake-layers add-layer ../OSES-Assignment
     
-# 2: Check Layer has been added (optional if you have done #1)
+# 2: Check if the Layer has been added (optional if you have done #1)
     cd conf
     cat bblayers.conf
     --check that after the field 'BBLAYERS ?= "' you have something like 'poky/OSES-Assignment \'
@@ -33,7 +33,7 @@ STARTING FROM your poky directory (cd path_to_poky), after you cloned this proje
     
 # 3: Add to the image the driver+user application
     --add at the end of 'local.conf' the following lines:
-    IMAGE_INSTALL_append = "driver"
+    IMAGE_INSTALL_append = " driver"
     KERNEL_MODULE_AUTOLOAD += " driver"
     IMAGE_INSTALL_append = " userapp"
 
@@ -54,9 +54,10 @@ STARTING FROM your poky directory (cd path_to_poky), after you cloned this proje
 # LAYER INSTRUCTIONS FOR RASPBERRYPI3, STARTING FROM QEMUARM BUILD
 	--in order to install everithing on the rasperry only few more steps are needed. 
 	--this will take a lot of time to compile (from scratch) everything for the new machine.
-
+   
 # 6: Prerequisites:
 	--You will "convert" all the previuous work just to be compatible with the RPI3
+	
 # 7: Add new remote-layers to poky
 	--Needed in order to build a custom yocto distro for RPi3
 	git clone -b dunfell git://git.openembedded.org/meta-openembedded
@@ -91,8 +92,16 @@ STARTING FROM your poky directory (cd path_to_poky), after you cloned this proje
 	ENABLE_UART = "1"
 	IMAGE_FSTYPES = "tar.xz ext3 rpi-sdimg"
 	
-# 9: Micro SD setup
+# 9: Modify driver.bb file in the driver layer
+   --bitbake needs to compile this kernel module to be compatible with raspberry machine so:
+   cd ../../OSES-Assignment/recipes-example/driver
+	--modify the "COMPATIBLE_MACHINE" field like this:
+	COMPATIBLE_MACHINE = "raspberrypi3"
+	--compile everything
+	bitbake core-image-minimal
+	
+# 10: Micro SD setup
 	--you cannot test this on qemu as before.
 	--Suppose that your SD card is on /dev/sdb, (check it with lsblk command)
-	sudo dd if=tmp/deploy/images/raspberrypi3/core-image-full-cmdline-raspberrypi3.rpi-sdimg of=/dev/sdb bs=1M
+	sudo dd if=tmp/deploy/images/raspberrypi3/core-image-minimal-raspberrypi3.rpi-sdimg of=/dev/sdb bs=1M
 	
